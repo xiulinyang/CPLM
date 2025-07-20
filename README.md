@@ -6,7 +6,7 @@ This repository provides code for training the Critical Period-inspired Language
 
 
 # Installation
-This repository uses a customized version of Hugging Face Transformers (with custom modules like `modeling_gpt2_alibi_exponential.py`).  
+This repository uses a customized version of [Hugging Face Transformers](https://github.com/huggingface/transformers) (with custom modules like `modeling_gpt2_alibi_exponential.py`).  
 Please follow these steps to install the environment properly.
 
 ## 0. Prerequirments
