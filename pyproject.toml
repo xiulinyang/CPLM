@@ -1,0 +1,15 @@
+[project]
+name = "CPLM"
+version = "0.1.0"
+description = "Reproducible experiment with uv"
+dependencies = [
+   "datasets==3.0.1",
+  "accelerate==1.0.1",
+  "huggingface-hub==0.26.1",
+  "evaluate==0.4.3",
+  "tokenizers==0.20.1",
+  "pandas==2.2.3",
+  "tqdm==4.66.5",
+  "scikit-learn==1.5.2",
+  "tensorboard"
+]
