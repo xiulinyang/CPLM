@@ -190,7 +190,7 @@ def parse_args():
     parser.add_argument(
         "--seed", 
         type=int, 
-        default=None, 
+        default=42,
         help="A seed for reproducible training.")
     parser.add_argument(
         "--model_type",
