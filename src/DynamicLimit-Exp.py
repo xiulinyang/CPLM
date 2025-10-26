@@ -131,13 +131,13 @@ def parse_args():
     parser.add_argument(
         "--per_device_train_batch_size",
         type=int,
-        default=8,
+        default=512,
         help="Batch size (per device) for the training dataloader.",
     )
     parser.add_argument(
         "--per_device_eval_batch_size",
         type=int,
-        default=8,
+        default=512,
         help="Batch size (per device) for the evaluation dataloader.",
     )
     parser.add_argument(
@@ -155,7 +155,7 @@ def parse_args():
     parser.add_argument(
         "--num_train_epochs", 
         type=int, 
-        default=1, 
+        default=20,
         help="Total number of training epochs to perform.")
     parser.add_argument(
         "--max_train_steps",
@@ -166,7 +166,7 @@ def parse_args():
     parser.add_argument(
         "--gradient_accumulation_steps",
         type=int,
-        default=1,
+        default=2,
         help="Number of updates steps to accumulate before performing a backward/update pass.",
     )
     parser.add_argument(
