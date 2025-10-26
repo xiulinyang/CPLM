@@ -202,7 +202,7 @@ def parse_args():
     parser.add_argument(
         "--max_seq_length",
         type=int,
-        default=512,
+        default=32,
         help="The number of max length of sequences.",
     )    
     parser.add_argument(
