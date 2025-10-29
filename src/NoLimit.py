@@ -452,7 +452,8 @@ def main():
         n_head=4,        
         n_embd=256,      
         resid_pdrop=0.1,  
-        attn_pdrop=0.1,        
+        attn_pdrop=0.1,
+        _attn_implementation='eager',
         cache_dir=args.cache_dir, 
         vocab_size=tokenizer.vocab_size  
 
@@ -462,7 +463,7 @@ def main():
     config.eos_token_id = tokenizer.eos_token_id
 
     model = GPT2LMHeadModel(config)
-
+    print(model)
     vocab_size = len(tokenizer)
     new_vocab_size = (vocab_size + 7) // 8 * 8
     model.resize_token_embeddings(new_vocab_size)
