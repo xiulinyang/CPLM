@@ -187,7 +187,7 @@ class GPT2Attention(nn.Module):
         # Set initial_slope and decay rate explicitly
         self.initial_slope = 1.0
         self.decay_rate = 0.6  # decay rate
-
+        # epoch = min(self.num_epochs, self.num_epochs)
         # Calculate the current slope based on the epoch
         m_t = self.initial_slope * (self.decay_rate ** self.current_epoch)
 
