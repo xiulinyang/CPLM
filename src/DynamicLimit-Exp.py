@@ -155,7 +155,7 @@ def parse_args():
     parser.add_argument(
         "--num_train_epochs", 
         type=int, 
-        default=20,
+        default=2,
         help="Total number of training epochs to perform.")
     parser.add_argument(
         "--max_train_steps",
@@ -334,6 +334,7 @@ def main():
     accelerator_log_kwargs = {}
 
     if args.with_tracking:
+        print('==================with tracking ======================')
         accelerator_log_kwargs["log_with"] = args.report_to
         accelerator_log_kwargs["project_dir"] = args.output_dir
 
@@ -452,7 +453,8 @@ def main():
         n_embd=256,      
         resid_pdrop=0.1,  
         attn_pdrop=0.1,        
-        cache_dir=args.cache_dir, 
+        cache_dir=args.cache_dir,
+        _attn_implementation='eager',
         vocab_size=tokenizer.vocab_size  
 
     )
@@ -461,7 +463,7 @@ def main():
     config.eos_token_id = tokenizer.eos_token_id
 
     model = GPT2LMHeadModel(config)
-
+    print(model)
     vocab_size = len(tokenizer)
     new_vocab_size = (vocab_size + 7) // 8 * 8
     model.resize_token_embeddings(new_vocab_size)
