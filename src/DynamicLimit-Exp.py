@@ -38,7 +38,7 @@ from huggingface_hub import HfApi
 from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
 from torch.utils.tensorboard import SummaryWriter
-
+from transformers import TrainerCallback
 import transformers
 from transformers import (
     MODEL_MAPPING,
@@ -311,6 +311,11 @@ def parse_args():
     return args
 
 
+class AlibiSlopeCallback(TrainerCallback):
+    def on_epoch_begin(self, args, state, control, model=None, **kwargs):
+        for m in model.modules():
+            if hasattr(m, "update_epoch"):
+                m.update_epoch(state.epoch)
 
 
 def main():
@@ -675,9 +680,18 @@ def main():
     # update the progress_bar if load from checkpoint
     progress_bar.update(completed_steps)
 
+    def log_alibi_slope_once(model, tag="train"):
+        for m in model.modules():
+            if hasattr(m, "m"):
+                print(f"[{tag}] current ALiBi slope =", float(m.m.item()))
+
 
     writer = SummaryWriter(log_dir=args.output_dir)
     for epoch in range(starting_epoch, args.num_train_epochs):
+        for m in model.modules():
+            if hasattr(m, "update_epoch"):
+                m.update_epoch(epoch)
+        log_alibi_slope_once(model, tag="train")
         total_loss = 0.0
         model.train()
         if args.with_tracking:
