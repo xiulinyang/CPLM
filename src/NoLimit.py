@@ -191,7 +191,7 @@ def parse_args():
     parser.add_argument(
         "--seed", 
         type=int, 
-        default=42,
+        default=64,
         help="A seed for reproducible training.")
     parser.add_argument(
         "--model_type",
@@ -252,7 +252,7 @@ def parse_args():
     parser.add_argument(
         "--checkpointing_steps",
         type=lambda x: int(x) if x.isdigit() else x,  
-        default=None,
+        default='epoch',
         help="Interval (number of steps or epoch) at which to save checkpoints.",
     )    
     parser.add_argument(
@@ -346,8 +346,12 @@ def main():
         cache_dir=os.getenv("HF_HOME")
     )
 
-    tokenizer.add_special_tokens({'pad_token': '[PAD]', 'bos_token': '[BOS]', 'eos_token': '[EOS]'})
-
+    print(tokenizer.pad_token, tokenizer.bos_token, tokenizer.eos_token)
+    tokenizer.unk_token = "<unk>"
+    tokenizer.pad_token = "<pad>"
+    tokenizer.eos_token = "<|endoftext|>"
+    tokenizer.bos_token = tokenizer.eos_token
+    print(tokenizer.pad_token, tokenizer.bos_token, tokenizer.eos_token)
     # Make one log on every process with the configuration for debugging.
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
@@ -449,8 +453,8 @@ def main():
 
     config = GPT2Config(
         n_layer=4,       
-        n_head=4,        
-        n_embd=256,      
+        n_head=8,        
+        n_embd=512,      
         resid_pdrop=0.1,  
         attn_pdrop=0.1,
         _attn_implementation='eager',
