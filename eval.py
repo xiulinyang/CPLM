@@ -168,7 +168,7 @@ def main():
     checkpoints = glob(f'{args.model_dir}/epoch*')
     print(checkpoints)
     for checkpoint in checkpoints:
-        scorer = SimpleScorer(f'{args.model_dir}/{checkpoint}', device=args.device, tokenizer_dir=args.tokenizer_dir)
+        scorer = SimpleScorer(f'{checkpoint}', device=args.device, tokenizer_dir=args.tokenizer_dir)
         acc, dist = eval_sent_pair(scorer, tokenizer, test)
 
         tag = Path(args.model_dir).name
