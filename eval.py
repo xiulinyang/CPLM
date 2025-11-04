@@ -165,15 +165,16 @@ def main():
 
     tok_src = args.tokenizer_dir if args.tokenizer_dir else args.model_dir
     tokenizer = AutoTokenizer.from_pretrained(tok_src)
-    checkpoints = range(0, 20)
+    checkpoints = glob(f'{args.model_dir}/epoch*')
+    print(checkpoints)
     for checkpoint in checkpoints:
-        scorer = SimpleScorer(args.model_dir/'checkpoint-'+checkpoint, device=args.device, tokenizer_dir=args.tokenizer_dir)
+        scorer = SimpleScorer(f'{args.model_dir}/{checkpoint}', device=args.device, tokenizer_dir=args.tokenizer_dir)
         acc, dist = eval_sent_pair(scorer, tokenizer, test)
-    
+
         tag = Path(args.model_dir).name
         out_dir = f"{args.eval_dataset}_results"
-        pd.DataFrame({"best": acc}).to_csv(f"{out_dir}/results_{tag}_ckpt{checkpoint}.csv")
-        pd.DataFrame(dist).to_csv(f"{out_dir}/distributions_{tag}_ckpt{checkpoint}.csv")
+        pd.DataFrame({"best": acc}).to_csv(f"{out_dir}/results_{tag}_{checkpoint}.csv")
+        pd.DataFrame(dist).to_csv(f"{out_dir}/distributions_{tag}_{checkpoint}.csv")
         print("Done.")
 
 if __name__ == "__main__":
