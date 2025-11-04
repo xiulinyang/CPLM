@@ -170,8 +170,8 @@ def main():
     for checkpoint in checkpoints:
         scorer = SimpleScorer(f'{checkpoint}', device=args.device, tokenizer_dir=args.tokenizer_dir)
         acc, dist = eval_sent_pair(scorer, tokenizer, test)
-
-        tag = Path(args.model_dir).name
+        epoch = checkpoint.split('/')[-1]
+        tag = Path(args.model_dir).namec
         out_dir = f"{args.eval_dataset}_results"
         pd.DataFrame({"best": acc}).to_csv(f"{out_dir}/results_{tag}_{checkpoint}.csv")
         pd.DataFrame(dist).to_csv(f"{out_dir}/distributions_{tag}_{checkpoint}.csv")
