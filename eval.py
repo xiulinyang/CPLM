@@ -13,7 +13,7 @@ from tqdm import tqdm
 #ifrom transformers.models.gpt2.modeling_gpt2_alibi_exponential import GPT2LMHeadModel
 
 from transformers.models.gpt2.modeling_gpt2 import GPT2LMHeadModel
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer,AutoConfig
 
 def read_data(data_path, dataset_name):
     test_set = {}
@@ -63,7 +63,7 @@ def read_data(data_path, dataset_name):
     return test_set
 
 class SimpleScorer:
-    def __init__(self, model_dir, device="cpu", tokenizer_dir=None):
+    def __init__(self, model_dir, device="cpu", config_dir = None, tokenizer_dir=None):
         self.device = torch.device(device)
         tok_src = tokenizer_dir if tokenizer_dir else model_dir
         self.tok = AutoTokenizer.from_pretrained(tok_src)
@@ -79,8 +79,11 @@ class SimpleScorer:
             self.bos_id = self.tok.convert_tokens_to_ids("[BOS]")
         elif self.tok.bos_token_id is not None:
             self.bos_id = self.tok.bos_token_id
+        assert config_dir is not None
+        cfg = AutoConfig.from_pretrained(config_dir, local_files_only=True)
+        print("[DEBUG] loaded config:", cfg.n_embd, cfg.n_layer, cfg.n_head, cfg.n_inner)
 
-        self.model = GPT2LMHeadModel.from_pretrained(model_dir)
+        self.model = GPT2LMHeadModel.from_pretrained(model_dir, config=cfg,local_files_only=True, )
         self.model.to(self.device).eval()
 
     @torch.no_grad()
@@ -168,7 +171,7 @@ def main():
     checkpoints = glob(f'{args.model_dir}/epoch*')
     print(checkpoints)
     for checkpoint in checkpoints:
-        scorer = SimpleScorer(f'{checkpoint}', device=args.device, tokenizer_dir=args.tokenizer_dir)
+        scorer = SimpleScorer(f'{checkpoint}', device=args.device, config_dir = args.model_dir, tokenizer_dir=args.tokenizer_dir)
         acc, dist = eval_sent_pair(scorer, tokenizer, test)
         epoch = checkpoint.split('/')[-1]
         tag = Path(args.model_dir).name
