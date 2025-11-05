@@ -130,7 +130,7 @@ def get_relative_positions(seq_len: int) -> torch.tensor:
 
 
 class GPT2Attention(nn.Module):
-    def __init__(self, config, is_cross_attention=False, layer_idx=None, num_epochs=10, initial_slope=1.0, final_slope=0.1):
+    def __init__(self, config, is_cross_attention=False, layer_idx=None, num_epochs=10, initial_slope=1.0, final_slope=0.0):
         super().__init__()
         self.config = config
         self.num_epochs = num_epochs
@@ -1046,7 +1046,7 @@ class GPT2Model(GPT2PreTrainedModel):
         if inputs_embeds is None:
             inputs_embeds = self.wte(input_ids)
         position_embeds = self.wpe(position_ids)
-        hidden_states = inputs_embeds + position_embeds
+        hidden_states = inputs_embeds
 
         # Attention mask.
         _use_sdpa = self._attn_implementation == "sdpa" and output_attentions is False and head_mask is None
