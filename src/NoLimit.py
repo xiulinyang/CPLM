@@ -132,13 +132,13 @@ def parse_args():
     parser.add_argument(
         "--per_device_train_batch_size",
         type=int,
-        default=512,
+        default=128,
         help="Batch size (per device) for the training dataloader.",
     )
     parser.add_argument(
         "--per_device_eval_batch_size",
         type=int,
-        default=512,
+        default=128,
         help="Batch size (per device) for the evaluation dataloader.",
     )
     parser.add_argument(
@@ -156,7 +156,7 @@ def parse_args():
     parser.add_argument(
         "--num_train_epochs", 
         type=int, 
-        default=20,
+        default=1,
         help="Total number of training epochs to perform.")
     parser.add_argument(
         "--max_train_steps",
@@ -180,7 +180,7 @@ def parse_args():
     parser.add_argument(
         "--num_warmup_steps", 
         type=int, 
-        default=0, 
+        default=1000, 
         help="Number of steps for the warmup in the lr scheduler."
     )
     parser.add_argument(
@@ -203,7 +203,7 @@ def parse_args():
     parser.add_argument(
         "--max_seq_length",
         type=int,
-        default=32,
+        default=128,
         help="The number of max length of sequences.",
     )    
     parser.add_argument(
@@ -470,7 +470,7 @@ def main():
     print(model)
     vocab_size = len(tokenizer)
     new_vocab_size = (vocab_size + 7) // 8 * 8
-    model.resize_token_embeddings(new_vocab_size)
+    #model.resize_token_embeddings(new_vocab_size)
 
     print("Tokenizer bos_token_id:", tokenizer.bos_token_id)
     print("Tokenizer eos_token_id:", tokenizer.eos_token_id)
@@ -652,6 +652,7 @@ def main():
         if args.resume_from_checkpoint is not None or args.resume_from_checkpoint != "":
             checkpoint_path = args.resume_from_checkpoint
             path = os.path.basename(args.resume_from_checkpoint)
+            print(f'load a pretrained model from {checkpoint_path}')
         else:
             # Get the most recent checkpoint
             dirs = [f.name for f in os.scandir(os.getcwd()) if f.is_dir()]
@@ -666,7 +667,7 @@ def main():
         training_difference = os.path.splitext(path)[0]
 
         if "epoch" in training_difference:
-            starting_epoch = int(training_difference.replace("epoch_", "")) + 1
+            starting_epoch = int(training_difference.replace("epoch_", "")) + 0
             resume_step = None
             completed_steps = starting_epoch * num_update_steps_per_epoch
         else:
