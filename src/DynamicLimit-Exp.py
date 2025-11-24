@@ -27,7 +27,7 @@ import logging
 import math
 import os
 from pathlib import Path
-
+from itertools import chain
 import datasets
 import torch
 from accelerate import Accelerator
@@ -311,6 +311,8 @@ def parse_args():
     return args
 
 
+
+
 class AlibiSlopeCallback(TrainerCallback):
     def on_epoch_begin(self, args, state, control, model=None, **kwargs):
         for m in model.modules():
@@ -453,8 +455,18 @@ def main():
                 **dataset_args,
             )
 
-
-
+    def group_texts(examples):
+        concatenated_examples = {
+            k: list(chain(*examples[k])) for k in examples.keys()
+        }
+        total_length = len(concatenated_examples[list(examples.keys())[0]])
+        total_length = (total_length // args.max_seq_length) * args.max_seq_length
+        result = {
+            k: [t[i:i + args.max_seq_length] for i in range(0, total_length, args.max_seq_length)]
+            for k, t in concatenated_examples.items()
+        }
+        result["labels"] = result["input_ids"].copy()
+        return result
 
     config = GPT2Config(
         n_layer=4,       
@@ -508,13 +520,24 @@ def main():
         raw_datasets[split] = raw_datasets[split].map(add_special_tokens)
 
 
-
+    def group_texts(examples):
+        concatenated_examples = {
+            k: list(chain(*examples[k])) for k in examples.keys()
+        }
+        total_length = len(concatenated_examples[list(examples.keys())[0]])
+        total_length = (total_length // args.max_seq_length) * args.max_seq_length
+        result = {
+            k: [t[i:i + args.max_seq_length] for i in range(0, total_length, args.max_seq_length)]
+            for k, t in concatenated_examples.items()
+        }
+        result["labels"] = result["input_ids"].copy()
+        return result
 
     with accelerator.main_process_first():
         tokenized_datasets = raw_datasets.map(
-            tokenize_function,
+            group_texts,
             batched=True,
-            num_proc=1,
+            num_proc=12,
             remove_columns=column_names,
             load_from_cache_file=True,  
             desc="Running tokenizer on dataset",
