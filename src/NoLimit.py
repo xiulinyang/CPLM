@@ -502,7 +502,11 @@ def main():
     for split in ['train', 'validation']:
         raw_datasets[split] = raw_datasets[split].map(add_special_tokens)
 
-    def group_texts(examples):
+    def group_texts(exampless):
+        examples = tokenizer(
+            exampless[text_column_name],
+            truncation=True,
+        )
         concatenated_examples = {
             k: list(chain(*examples[k])) for k in examples.keys()
         }
