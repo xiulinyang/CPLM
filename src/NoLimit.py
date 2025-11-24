@@ -506,6 +506,7 @@ def main():
         examples = tokenizer(
             exampless[text_column_name],
             truncation=True,
+            max_length=args.max_seq_length
         )
         concatenated_examples = {
             k: list(chain(*examples[k])) for k in examples.keys()
