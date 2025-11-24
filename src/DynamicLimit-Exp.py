@@ -323,7 +323,7 @@ def main():
 
 
     # Early stopping parameters
-    early_stopping_patience = 1  
+    early_stopping_patience = 5  
     best_eval_loss = float("inf")  
     no_improvement_count = 0 
     best_checkpoint_dir = None  
