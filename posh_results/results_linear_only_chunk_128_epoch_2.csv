@@ -1,0 +1,15 @@
+,best
+anaphoric-one-semantics,0.0
+anaphoric-one-syntax,0.466
+island-adjunct,0.574
+island-complex-np,0.51
+island-wh,1.0
+principle_a_command,0.484
+principle_a_locality,0.43
+question-formation_or,0.552
+question-formation_or_strict,0.054
+question-formation_rr,0.556
+question-formation_rr_strict,0.038
+question-formation_sr,0.404
+question-formation_sr_strict,0.05
+wanna,0.094
