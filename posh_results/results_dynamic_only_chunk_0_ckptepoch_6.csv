@@ -1,0 +1,15 @@
+,epoch_6
+anaphoric-one-semantics,0.0
+anaphoric-one-syntax,0.596
+island-adjunct,0.658
+island-complex-np,0.244
+island-wh,0.986
+principle_a_command,0.448
+principle_a_locality,0.31
+question-formation_or,0.504
+question-formation_or_strict,0.222
+question-formation_rr,0.468
+question-formation_rr_strict,0.21
+question-formation_sr,0.496
+question-formation_sr_strict,0.158
+wanna,0.968
