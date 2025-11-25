@@ -18,7 +18,11 @@ irregular-verb,0.5175
 island-effects-adjunct_island,0.3575
 island-effects-coordinate_structure_constraint,0.2565
 local_attractor-in_question_with_aux,0.834
+<<<<<<< HEAD
 npi_licensing-matrix_question,0.688
+=======
+npi_licensing-matrix_question,0.6875
+>>>>>>> 7fc45933dc1f88a24b9f2f530d3483fc2d1939b4
 npi_licensing-only_npi_licensor,0.5965
 quantifiers-existential_there,0.585
 quantifiers-superlative,0.509

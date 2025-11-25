@@ -7,9 +7,14 @@ island-wh,0.998
 principle_a_command,0.476
 principle_a_locality,0.338
 question-formation_or,0.518
+<<<<<<< HEAD
 question-formation_or_strict,0.072
 question-formation_rr,0.466
 question-formation_rr_strict,0.156
 question-formation_sr,0.51
 question-formation_sr_strict,0.168
+=======
+question-formation_rr,0.466
+question-formation_sr,0.51
+>>>>>>> 7fc45933dc1f88a24b9f2f530d3483fc2d1939b4
 wanna,0.038

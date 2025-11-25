@@ -15,7 +15,11 @@ ellipsis-n_bar,0.5755
 filler-gap-wh_question_object,0.8665
 filler-gap-wh_question_subject,0.912
 irregular-verb,0.4955
+<<<<<<< HEAD
 island-effects-adjunct_island,0.3575
+=======
+island-effects-adjunct_island,0.358
+>>>>>>> 7fc45933dc1f88a24b9f2f530d3483fc2d1939b4
 island-effects-coordinate_structure_constraint,0.2225
 local_attractor-in_question_with_aux,0.5915
 npi_licensing-matrix_question,0.594

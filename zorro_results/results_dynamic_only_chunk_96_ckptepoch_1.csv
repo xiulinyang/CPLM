@@ -16,7 +16,11 @@ filler-gap-wh_question_object,0.8815
 filler-gap-wh_question_subject,1.0
 irregular-verb,0.511
 island-effects-adjunct_island,0.8835
+<<<<<<< HEAD
 island-effects-coordinate_structure_constraint,0.707
+=======
+island-effects-coordinate_structure_constraint,0.7075
+>>>>>>> 7fc45933dc1f88a24b9f2f530d3483fc2d1939b4
 local_attractor-in_question_with_aux,0.6125
 npi_licensing-matrix_question,0.223
 npi_licensing-only_npi_licensor,0.0
