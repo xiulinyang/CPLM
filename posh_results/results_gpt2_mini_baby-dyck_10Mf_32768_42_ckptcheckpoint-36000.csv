@@ -1,0 +1,15 @@
+,checkpoint-36000
+anaphoric-one-semantics,0.256
+anaphoric-one-syntax,0.616
+island-adjunct,0.672
+island-complex-np,0.602
+island-wh,0.86
+principle_a_command,0.366
+principle_a_locality,0.668
+question-formation_or,0.57
+question-formation_or_strict,0.152
+question-formation_rr,0.528
+question-formation_rr_strict,0.148
+question-formation_sr,0.64
+question-formation_sr_strict,0.138
+wanna,0.312
